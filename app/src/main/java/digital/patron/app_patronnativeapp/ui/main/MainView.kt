@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun MainView(
+    viewModel: MainViewModel
 ) {
 
     Column(

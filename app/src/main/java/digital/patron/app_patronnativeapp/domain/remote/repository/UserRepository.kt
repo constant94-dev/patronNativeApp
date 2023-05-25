@@ -1,7 +1,10 @@
 package digital.patron.app_patronnativeapp.domain.remote.repository
 
-interface UserRepository {
+import digital.patron.app_patronnativeapp.domain.remote.model.User
+import digital.patron.app_patronnativeapp.di.RetrofitClient
 
-    fun getUserAll() // '사용자' 전체 정보 조회
-    fun getUserName() // '사용자' 이름 조회
+class UserRepository {
+    suspend fun getUserName(userId: Int): User {
+        return RetrofitClient.user_api.getUserName(userId)
+    }
 }
