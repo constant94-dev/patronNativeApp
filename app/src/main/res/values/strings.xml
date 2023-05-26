@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">app_patronNativeApp</string>
+    <string name="button_text_ok">Ok</string>
 </resources>
