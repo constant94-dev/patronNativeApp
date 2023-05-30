@@ -1,6 +1,7 @@
 package digital.patron.app_patronnativeapp.domain.main.entity
 
+import com.google.gson.annotations.SerializedName
+
 data class MainEntity(
-    var id: Int,
-    var name: String,
+    @SerializedName("code") val code: String,
 )
