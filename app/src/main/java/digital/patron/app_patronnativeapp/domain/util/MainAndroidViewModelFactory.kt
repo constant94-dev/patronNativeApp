@@ -3,8 +3,6 @@ package digital.patron.app_patronnativeapp.domain.util
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import digital.patron.app_patronnativeapp.data.main.remote.dto.MainRequest
-import digital.patron.app_patronnativeapp.data.main.repository.MainRepositoryImpl
 import digital.patron.app_patronnativeapp.domain.main.usecase.MainUseCase
 import digital.patron.app_patronnativeapp.ui.main.MainViewModel
 
