@@ -2,6 +2,8 @@ package digital.patron.app_patronnativeapp.ui.main
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 
@@ -41,6 +43,7 @@ class MainViewModel(
 
                         Log.d("result3", _state2.value.code)
                         Log.d("result4", _state2.value.toString())
+
                     }
 
                 }
