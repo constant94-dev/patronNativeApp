@@ -12,3 +12,5 @@ val Pink40 = Color(0xFF7D5260)
 
 val Title = Color(0xFFFFFFFF)
 val SubTitle = Color(0xADADADAD)
+val FooterTitle = Color(0xff000000)
+val FooterSubTitle = Color(0x70707070)
