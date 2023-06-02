@@ -1,5 +1,6 @@
 package digital.patron.app_patronnativeapp.ui.main
 
+<<<<<<< Updated upstream
 import android.annotation.SuppressLint
 import android.content.res.Resources
 import androidx.compose.foundation.Image
@@ -74,10 +75,15 @@ import digital.patron.app_patronnativeapp.ui.theme.Title
 * */
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalMaterial3Api
+=======
+import androidx.compose.runtime.Composable
+
+>>>>>>> Stashed changes
 @Composable
 fun MainView(
     viewModel: MainViewModel
 ) {
+<<<<<<< Updated upstream
     val hzScrollState = rememberScrollState()
     val vtScrollState = rememberScrollState()
 
@@ -636,3 +642,6 @@ fun MainView() {
         }
     }
 } // MainView end
+=======
+}
+>>>>>>> Stashed changes
