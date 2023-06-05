@@ -9,6 +9,7 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -18,6 +19,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -92,6 +96,8 @@ fun MainView(
     val hzScrollState = rememberScrollState()
     val vtScrollState = rememberScrollState()
 
+    val itemsList = (0..5).toList()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -105,28 +111,36 @@ fun MainView(
                     ) {
                         IconButton(
                             onClick = {},
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier
+                                .weight(1f),
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.icon_logo),
                                 contentDescription = "Patron logo.",
+                                modifier = Modifier
+                                    .width(34.dp)
+                                    .height(20.dp),
                                 colorFilter = ColorFilter.tint(Color.White),
                             )
-
                         }
 
                         Spacer(modifier = Modifier.weight(6f)) // 60% width as the parent
 
                         IconButton(
                             onClick = {},
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier
+                                .weight(1f),
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.icon_dump_profile),
+                                modifier = Modifier
+                                    .width(34.dp)
+                                    .height(20.dp),
                                 contentDescription = "Patron dump profile.",
-                                colorFilter = ColorFilter.tint(Color.White),
                             )
                         }
+
+                        Spacer(modifier = Modifier.weight(0.5f))
 
                         IconButton(
                             onClick = {},
@@ -135,9 +149,14 @@ fun MainView(
                             Image(
                                 painter = painterResource(id = R.drawable.icon_search),
                                 contentDescription = "Patron search.",
+                                modifier = Modifier
+                                    .width(34.dp)
+                                    .height(20.dp),
                                 colorFilter = ColorFilter.tint(Color.White),
                             )
                         }
+
+                        Spacer(modifier = Modifier.weight(0.5f))
 
                         IconButton(
                             onClick = {},
@@ -146,32 +165,108 @@ fun MainView(
                             Image(
                                 painter = painterResource(id = R.drawable.icon_menu),
                                 contentDescription = "Patron menu.",
+                                modifier = Modifier
+                                    .width(34.dp)
+                                    .height(20.dp),
                                 colorFilter = ColorFilter.tint(Color.White),
                             )
                         }
+
                     } // Row end
                 }, // navigation end
                 colors = TopAppBarDefaults.largeTopAppBarColors(containerColor = Color(R.color.background)),
             )
         }, // topBar end
-        containerColor = Color(R.color.background)
+        containerColor = Color(R.color.background),
     ) {
+
         Column {
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(80.dp))
+
+            Text(
+                text = "추천 큐레이션",
+                color = Title,
+                fontWeight = FontWeight(700),
+                fontSize = 20.sp,
+            )
+
+
+            Column(
+
+            ) {
+
+                LazyRow() {
+                    items(itemsList.size) {
+                        Image(
+                            painter = painterResource(id = R.drawable.img_empty),
+                            contentDescription = ""
+                        )
+                        Column() {
+                            Text(
+                                text = "&작품명",
+                                modifier = Modifier.padding(bottom = 4.dp),
+                                color = Title,
+                                fontWeight = FontWeight(500),
+                                fontSize = 16.sp,
+                            )
+                            Text(
+                                text = "&작가명 외 1명",
+                                modifier = Modifier.padding(bottom = 4.dp),
+                                color = SubTitle,
+                                fontWeight = FontWeight(400),
+                                fontSize = 14.sp,
+                            )
+                            Text(
+                                text = "&작품수 · &총감상시간",
+                                color = SubTitle,
+                                fontWeight = FontWeight(400),
+                                fontSize = 12.sp,
+                            )
+                        }
+                    }
+
+
+                }
+                for (index in 0..itemsList.size) {
+                    Text(
+                        text = "&작품명",
+                        modifier = Modifier.padding(bottom = 4.dp),
+                        color = Title,
+                        fontWeight = FontWeight(500),
+                        fontSize = 16.sp,
+                    )
+                    Text(
+                        text = "&작가명 외 1명",
+                        modifier = Modifier.padding(bottom = 4.dp),
+                        color = SubTitle,
+                        fontWeight = FontWeight(400),
+                        fontSize = 14.sp,
+                    )
+                    Text(
+                        text = "&작품수 · &총감상시간",
+                        color = SubTitle,
+                        fontWeight = FontWeight(400),
+                        fontSize = 12.sp,
+                    )
+                }
+
+            }
+
+
+
             Column(
                 modifier = Modifier
                     .verticalScroll(vtScrollState)
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.Top,
             ) {
-                Divider(
-                    color = Color.Red,
-                    thickness = 8.dp,
-                ) // 'Scaffold' 레이아웃과 구분하기 위한 선
+
+//                good()
 
                 Column(
                     modifier = Modifier
-                        .padding(bottom = 40.dp, start = 20.dp),
+                        .padding(bottom = 40.dp, start = 20.dp)
+                        .fillMaxSize(),
                 ) {
                     Text(
                         text = "추천 큐레이션",
@@ -180,39 +275,44 @@ fun MainView(
                         fontSize = 20.sp,
                     )
                     Row(
+//                        horizontalArrangement = Arrangement.spacedBy(12.dp),
                         modifier = Modifier
-                            .padding(top = 8.dp)
                             .horizontalScroll(hzScrollState),
                     ) {
-                        for (index in 1..15) {
-                            Column {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
-                                )
 
-                                Text(
-                                    text = "&작품명",
-                                    color = Title,
-                                    fontWeight = FontWeight(500),
-                                    fontSize = 16.sp,
-                                )
-                                Text(
-                                    text = "&작가명 외 1명",
-                                    color = SubTitle,
-                                    fontWeight = FontWeight(400),
-                                    fontSize = 14.sp,
-                                )
-                                Text(
-                                    text = "&작품수 · &총감상시간",
-                                    color = SubTitle,
-                                    fontWeight = FontWeight(400),
-                                    fontSize = 12.sp,
-                                )
-                            }
-                        }
+
+                        /*Column {
+                            Image(
+                                painter = painterResource(id = R.drawable.img_empty),
+                                contentDescription = "",
+                                modifier = Modifier.padding(bottom = 4.dp),
+                            )
+
+                            Text(
+                                text = "&작품명",
+                                modifier = Modifier.padding(bottom = 4.dp),
+                                color = Title,
+                                fontWeight = FontWeight(500),
+                                fontSize = 16.sp,
+                            )
+                            Text(
+                                text = "&작가명 외 1명",
+                                modifier = Modifier.padding(bottom = 4.dp),
+                                color = SubTitle,
+                                fontWeight = FontWeight(400),
+                                fontSize = 14.sp,
+                            )
+                            Text(
+                                text = "&작품수 · &총감상시간",
+                                color = SubTitle,
+                                fontWeight = FontWeight(400),
+                                fontSize = 12.sp,
+                            )
+                        }*/
+
                     } // 추천 큐레이션 작품 리스트 끝
                 } // 자식 레이아웃 추천 큐레이션 끝
+
 
                 Column(
                     modifier = Modifier
@@ -645,8 +745,8 @@ fun MainView(
 
             } // 메인페이지 본문 부모 레이아웃 끝
         } // 메인페이지 상단 바 / 본문 / 하단 바 구조를 잡기위한 레이아웃 끝
-
     } // Scaffold function end
+
 } // MainView function end
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
