@@ -14,3 +14,5 @@ val Title = Color(0xFFFFFFFF)
 val SubTitle = Color(0xADADADAD)
 val FooterTitle = Color(0xff000000)
 val FooterSubTitle = Color(0x70707070)
+
+val BoxText = Color(0x0A0A0A0A)
