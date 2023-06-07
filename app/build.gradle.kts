@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt") // kapt 사용을 위한 설정
+    kotlin("plugin.serialization") version "1.8.10"
 }
 
 android {
@@ -110,4 +111,18 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     // Gson
     implementation("com.squareup.retrofit2:converter-gson:$gsonVersion")
+
+    // JSON serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+
+    // Inject
+    implementation("javax.inject:javax.inject:1")
+
+    // Retrofit2 kotlinx serialization converter
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+
+    // okhttp3
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+
+
 }
