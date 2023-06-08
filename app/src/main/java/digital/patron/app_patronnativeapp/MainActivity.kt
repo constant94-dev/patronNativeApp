@@ -6,23 +6,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.lifecycle.viewmodel.compose.viewModel
-import digital.patron.app_patronnativeapp.domain.util.MainAndroidViewModelFactory
+import digital.patron.app_patronnativeapp.domain.util.HomeAndroidViewModelFactory
 import digital.patron.app_patronnativeapp.ui.main.MainView
-import digital.patron.app_patronnativeapp.ui.main.MainViewModel
-import kotlinx.coroutines.launch
+import digital.patron.app_patronnativeapp.ui.main.HomeViewModel
 
 @ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
-    lateinit var viewModel: MainViewModel
+    lateinit var viewModel: HomeViewModel
     @SuppressLint("CoroutineCreationDuringComposition")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
         setContent {
             viewModel = viewModel(
-                factory = MainAndroidViewModelFactory(application),
+                factory = HomeAndroidViewModelFactory(application),
             )
             MainView(viewModel = viewModel)
 
