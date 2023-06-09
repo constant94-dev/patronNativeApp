@@ -37,3 +37,14 @@
   <h4>[샘플코드 모듈화 소개]<br/>
   https://github.com/android/nowinandroid/blob/main/docs/ModularizationLearningJourney.md</h4>
 </p>
+
+<p>
+  <h4>[Kotlin Flow 및 LiveData 사용법]<br/>
+  https://developer.android.com/codelabs/advanced-kotlin-coroutines?hl=ko#2</h4>
+</p>
+
+<p>
+  <h4>[Android의 Kotlin 흐름]<br/>
+  https://developer.android.com/kotlin/flow?hl=ko</h4>
+</p>
+

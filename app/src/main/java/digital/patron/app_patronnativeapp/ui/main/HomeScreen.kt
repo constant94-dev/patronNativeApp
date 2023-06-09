@@ -187,8 +187,8 @@ fun MainView(
 
             Column(
                 modifier = Modifier.padding(
-                        top = 8.dp, bottom = 40.dp
-                    ),
+                    top = 8.dp, bottom = 40.dp
+                ),
             ) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -263,8 +263,8 @@ fun MainView(
 
             Column(
                 modifier = Modifier.padding(
-                        top = 8.dp, bottom = 40.dp
-                    ),
+                    top = 8.dp, bottom = 40.dp
+                ),
             ) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -336,8 +336,8 @@ fun MainView(
 
             Column(
                 modifier = Modifier.padding(
-                        top = 8.dp, bottom = 40.dp
-                    ),
+                    top = 8.dp, bottom = 40.dp
+                ),
             ) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -391,8 +391,8 @@ fun MainView(
 
             Column(
                 modifier = Modifier.padding(
-                        top = 8.dp, bottom = 40.dp
-                    ),
+                    top = 8.dp, bottom = 40.dp
+                ),
             ) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -437,8 +437,8 @@ fun MainView(
 
             Column(
                 modifier = Modifier.padding(
-                        top = 8.dp, bottom = 40.dp
-                    ),
+                    top = 8.dp, bottom = 40.dp
+                ),
             ) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -522,8 +522,8 @@ fun MainView(
 
             Column(
                 modifier = Modifier.padding(
-                        top = 8.dp, bottom = 40.dp
-                    ),
+                    top = 8.dp, bottom = 40.dp
+                ),
             ) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -577,8 +577,8 @@ fun MainView(
 
             Column(
                 modifier = Modifier.padding(
-                        top = 8.dp, bottom = 40.dp
-                    ),
+                    top = 8.dp, bottom = 40.dp
+                ),
             ) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -632,8 +632,8 @@ fun MainView(
 
             Column(
                 modifier = Modifier.padding(
-                        top = 8.dp, bottom = 40.dp
-                    ),
+                    top = 8.dp, bottom = 40.dp
+                ),
             ) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -735,7 +735,8 @@ fun MainView(
             } // 추천 아티스트 UI
 
             Button(
-                onClick = {},
+                onClick = {
+                    viewModel.getHomeContents() },
                 modifier = Modifier
                     .padding(bottom = 40.dp)
                     .fillMaxWidth(),
@@ -922,8 +923,8 @@ fun MainView() {
 
             Column(
                 modifier = Modifier.padding(
-                        top = 8.dp, bottom = 40.dp
-                    ),
+                    top = 8.dp, bottom = 40.dp
+                ),
             ) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -996,8 +997,8 @@ fun MainView() {
 
             Column(
                 modifier = Modifier.padding(
-                        top = 8.dp, bottom = 40.dp
-                    ),
+                    top = 8.dp, bottom = 40.dp
+                ),
             ) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -1063,8 +1064,8 @@ fun MainView() {
 
             Column(
                 modifier = Modifier.padding(
-                        top = 8.dp, bottom = 40.dp
-                    ),
+                    top = 8.dp, bottom = 40.dp
+                ),
             ) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -1112,8 +1113,8 @@ fun MainView() {
 
             Column(
                 modifier = Modifier.padding(
-                        top = 8.dp, bottom = 40.dp
-                    ),
+                    top = 8.dp, bottom = 40.dp
+                ),
             ) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -1152,8 +1153,8 @@ fun MainView() {
 
             Column(
                 modifier = Modifier.padding(
-                        top = 8.dp, bottom = 40.dp
-                    ),
+                    top = 8.dp, bottom = 40.dp
+                ),
             ) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -1230,8 +1231,8 @@ fun MainView() {
 
             Column(
                 modifier = Modifier.padding(
-                        top = 8.dp, bottom = 40.dp
-                    ),
+                    top = 8.dp, bottom = 40.dp
+                ),
             ) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -1279,8 +1280,8 @@ fun MainView() {
 
             Column(
                 modifier = Modifier.padding(
-                        top = 8.dp, bottom = 40.dp
-                    ),
+                    top = 8.dp, bottom = 40.dp
+                ),
             ) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -1328,8 +1329,8 @@ fun MainView() {
 
             Column(
                 modifier = Modifier.padding(
-                        top = 8.dp, bottom = 40.dp
-                    ),
+                    top = 8.dp, bottom = 40.dp
+                ),
             ) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),

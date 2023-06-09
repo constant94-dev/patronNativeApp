@@ -12,20 +12,13 @@ import digital.patron.app_patronnativeapp.ui.main.HomeViewModel
 
 @ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
-    lateinit var viewModel: HomeViewModel
-    @SuppressLint("CoroutineCreationDuringComposition")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            viewModel = viewModel(
+            val viewModel: HomeViewModel = viewModel(
                 factory = HomeAndroidViewModelFactory(application),
             )
             MainView(viewModel = viewModel)
-
         }
-
     }
 }
-
-
-// JetNews 보며 아키텍처 전체흐름 파악

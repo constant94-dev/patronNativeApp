@@ -2,6 +2,7 @@ package digital.patron.app_patronnativeapp.data.network.retrofit
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 * Retrofit을 사용하여 Remote API 통신을 위한 싱글톤 Retrofit 인스턴스를 생성하는 데 사용
 * */
 object RetrofitNetwork {
-    const val BaseUrl = "https://api.example.com/" //  API 요청의 기본 URL
+    const val BaseUrl = "http://183.96.128.211:8088/" //  API 요청의 기본 URL
 
     private var retrofitInstance: Retrofit? = null // Retrofit 인스턴스 초기화
     private val okHttpClient: OkHttpClient by lazy {

@@ -1,10 +1,16 @@
 package digital.patron.app_patronnativeapp.data.repository
 
+import android.util.Log
 import digital.patron.app_patronnativeapp.data.network.model.NetworkHome
+import digital.patron.app_patronnativeapp.data.network.model.NetworkTest
 import digital.patron.app_patronnativeapp.data.network.remote.HomeNetworkApi
 import digital.patron.app_patronnativeapp.data.network.retrofit.RetrofitNetwork
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import retrofit2.Response
 
 
 /**
@@ -14,12 +20,13 @@ import javax.inject.Inject
  * 리포지토리는 일반적으로 데이터 읽기 및 쓰기를 위한 하나 이상의 방법을 제공합니다.
  */
 class HomeContentsRepository {
-    private val retrofit = RetrofitNetwork.getInstance()
-    private val apiService = retrofit.create(HomeNetworkApi::class.java)
-
-    fun getHomeContents(): Flow<NetworkHome> {
-        return apiService.getHomeContents()
+    companion object {
+        private val retrofit = RetrofitNetwork.getInstance()
+        private val apiService = retrofit.create(HomeNetworkApi::class.java)
     }
 
+    fun getHomeContents(): Flow<Response<NetworkHome>> {
+        return apiService.getHomeContents()
+    }
 
 }
