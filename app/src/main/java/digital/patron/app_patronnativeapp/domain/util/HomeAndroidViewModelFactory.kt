@@ -16,7 +16,7 @@ class HomeAndroidViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         // 'MainViewModel' 을 만드는 경우 어떤 작업을 해줄 것인가
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-            return HomeViewModel(application, homeContentsRepository = HomeContentsRepository()) as T
+            return HomeViewModel(application = application, homeContentsRepository = HomeContentsRepository()) as T
         }
         return super.create(modelClass) // 위 경우를 제외하면 일반적인 기능으로 제공하겠다
     }

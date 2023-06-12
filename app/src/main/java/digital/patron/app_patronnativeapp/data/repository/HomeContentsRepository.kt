@@ -19,14 +19,17 @@ import retrofit2.Response
  * 리포지토리는 다른 계층에 대한 공개 API이며 앱 데이터에 액세스할 수 있는 유일한 방법을 제공 합니다.
  * 리포지토리는 일반적으로 데이터 읽기 및 쓰기를 위한 하나 이상의 방법을 제공합니다.
  */
+
 class HomeContentsRepository {
     companion object {
         private val retrofit = RetrofitNetwork.getInstance()
-        private val apiService = retrofit.create(HomeNetworkApi::class.java)
+        val apiService: HomeNetworkApi = retrofit.create(HomeNetworkApi::class.java)
+
+        const val TAG = "HomeContentsRepository"
     }
 
-    fun getHomeContents(): Flow<Response<NetworkHome>> {
-        return apiService.getHomeContents()
+    suspend fun getTests(): NetworkTest {
+        return apiService.getTests()
     }
 
 }

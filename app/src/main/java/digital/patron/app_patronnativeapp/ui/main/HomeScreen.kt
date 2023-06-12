@@ -28,6 +28,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,6 +44,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import digital.patron.app_patronnativeapp.R
 import digital.patron.app_patronnativeapp.ui.theme.BoxText
 import digital.patron.app_patronnativeapp.ui.theme.FooterSubTitle
@@ -82,12 +87,12 @@ import digital.patron.app_patronnativeapp.ui.theme.Title
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalMaterial3Api
 @Composable
-fun MainView(
+fun HomeView(
     viewModel: HomeViewModel
 ) {
-    val hzScrollState = rememberScrollState()
     val vtScrollState = rememberScrollState()
 
+    val textState = viewModel.getNetworkTest().collectAsState(initial = "")
     val itemsList = (1..15).toList()
 
     Scaffold(
@@ -736,14 +741,15 @@ fun MainView(
 
             Button(
                 onClick = {
-                    viewModel.getHomeContents() },
+                    viewModel.getNetworkTest()
+                },
                 modifier = Modifier
                     .padding(bottom = 40.dp)
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp)
             ) {
                 Text(
-                    text = "모든 아티스트",
+                    text = "${textState.value}",
                     color = Title,
                     fontWeight = FontWeight(500),
                     fontSize = 16.sp,
@@ -821,7 +827,7 @@ fun MainView(
 @Preview(showBackground = true)
 @Composable
 fun MainView() {
-    val hzScrollState = rememberScrollState()
+
     val vtScrollState = rememberScrollState()
 
     val itemsList = (1..15).toList()
