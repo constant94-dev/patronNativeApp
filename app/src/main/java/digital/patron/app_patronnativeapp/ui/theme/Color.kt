@@ -1,5 +1,6 @@
 package digital.patron.app_patronnativeapp.ui.theme
 
+import androidx.compose.material3.ButtonColors
 import androidx.compose.ui.graphics.Color
 
 val Purple80 = Color(0xFFD0BCFF)
@@ -15,4 +16,5 @@ val SubTitle = Color(0xADADADAD)
 val FooterTitle = Color(0xff000000)
 val FooterSubTitle = Color(0x70707070)
 
-val BoxText = Color(0x0A0A0A0A)
+val BoxText = Color(0x46464646)
+val HomeButton = Color(0x47474747)

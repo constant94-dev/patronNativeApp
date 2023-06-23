@@ -1,7 +1,10 @@
 package digital.patron.app_patronnativeapp.data.network.remote
 
 import digital.patron.app_patronnativeapp.data.network.model.NetworkHome
+import digital.patron.app_patronnativeapp.data.network.model.NetworkHomeNewArtwork
 import digital.patron.app_patronnativeapp.data.network.model.NetworkTest
+import digital.patron.app_patronnativeapp.domain.dto.ExhibitionDto
+import digital.patron.app_patronnativeapp.domain.model.Result
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Response
@@ -13,8 +16,11 @@ import retrofit2.http.POST
  * */
 interface HomeNetworkApi {
     @GET(value = "home")
-    fun getHomeContents(): Flow<Response<NetworkHome>> // Flow는 Kotlin의 코루틴을 활용하여 비동기 스트림을 처리하는 기능
+    suspend fun getHomeContents(): ExhibitionDto
 
     @GET("/test")
     suspend fun getTests(): NetworkTest
+
+    @GET("/test")
+    suspend fun getFlowTests(): NetworkTest
 }

@@ -20,6 +20,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,10 +30,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,11 +45,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
+
 import digital.patron.app_patronnativeapp.R
+
 import digital.patron.app_patronnativeapp.ui.theme.BoxText
 import digital.patron.app_patronnativeapp.ui.theme.FooterSubTitle
 import digital.patron.app_patronnativeapp.ui.theme.FooterTitle
+import digital.patron.app_patronnativeapp.ui.theme.HomeButton
 import digital.patron.app_patronnativeapp.ui.theme.SubTitle
 import digital.patron.app_patronnativeapp.ui.theme.Title
 
@@ -92,7 +96,22 @@ fun HomeView(
 ) {
     val vtScrollState = rememberScrollState()
 
-    val textState = viewModel.getNetworkTest().collectAsState(initial = "")
+    val textStateFlow = viewModel.dataFlow.collectAsState().value
+
+    // 큐레이션 UI 데이터
+    val itemsCurationThumb = viewModel.curationThumb.value ?: listOf("itemsQuration")
+    val itemsCurationThumbName = viewModel.curationThumbName.value ?: listOf("itemsExName")
+    val itemsCurationArtistName = viewModel.curationArtistName.value ?: listOf("itemsArtistName")
+    val itemsCurationArtistCount = viewModel.curationArtistCount.value ?: listOf(0)
+
+    // 새로운 아트워크 UI 데이터
+    val itemsNewlyArtwork = viewModel.newlyArtworks.value ?: listOf("NewlyArtwork")
+
+    // 추천 아티스트 UI 데이터
+    val itemsArtistProfileImage = viewModel.artistProfileImage.value ?: listOf("ArtistProfileImage")
+    val itemsRecommendArtistName = viewModel.recommendArtistName.value ?: listOf("RecommendArtistName")
+
+
     val itemsList = (1..15).toList()
 
     Scaffold(
@@ -198,12 +217,12 @@ fun HomeView(
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    items(itemsList.size) {
+                    items(itemsCurationThumb.size) { it ->
                         Column {
                             Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
+                                AsyncImage(
+                                    model = itemsCurationThumb[it],
+                                    contentDescription = "추천 큐레이션",
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
                                         .size(320.dp, 180.dp)
@@ -221,19 +240,24 @@ fun HomeView(
                                 )
 
                                 Text(
-                                    text = "1/8",
+                                    text = "${it + 1}/8",
                                     modifier = Modifier
+                                        .width(50.dp)
                                         .align(Alignment.BottomEnd)
                                         .padding(8.dp)
-                                        .background(BoxText),
+                                        .background(
+                                            color = BoxText,
+                                            shape = RoundedCornerShape(8.dp)
+                                        ),
                                     color = Title,
                                     fontWeight = FontWeight(700),
                                     fontSize = 12.sp,
+                                    textAlign = TextAlign.Center,
                                 )
                             }
 
                             Text(
-                                text = "&작품명",
+                                text = itemsCurationThumbName[it],
                                 modifier = Modifier.padding(
                                     bottom = 4.dp, top = 4.dp
                                 ),
@@ -241,13 +265,24 @@ fun HomeView(
                                 fontWeight = FontWeight(500),
                                 fontSize = 16.sp,
                             )
-                            Text(
-                                text = "&작가명 외 1명",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = SubTitle,
-                                fontWeight = FontWeight(400),
-                                fontSize = 14.sp,
-                            )
+                            if (itemsCurationArtistCount[it] > 0) {
+                                Text(
+                                    text = "${itemsCurationArtistName[it]} 외 ${itemsCurationArtistCount[it]}명",
+                                    modifier = Modifier.padding(bottom = 4.dp),
+                                    color = SubTitle,
+                                    fontWeight = FontWeight(400),
+                                    fontSize = 14.sp,
+                                )
+                            } else {
+                                Text(
+                                    text = "${itemsCurationArtistName[it]}",
+                                    modifier = Modifier.padding(bottom = 4.dp),
+                                    color = SubTitle,
+                                    fontWeight = FontWeight(400),
+                                    fontSize = 14.sp,
+                                )
+                            }
+
                             Text(
                                 text = "&작품수 · &총감상시간",
                                 color = SubTitle,
@@ -274,27 +309,31 @@ fun HomeView(
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    items(itemsList.size) {
+                    items(itemsNewlyArtwork.size) { it ->
                         Column {
                             Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
+                                AsyncImage(
+                                    model = itemsNewlyArtwork[it],
+                                    contentDescription = "새로운 아트워크",
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
                                         .size(154.dp)
                                         .clip(RoundedCornerShape(16.dp)),
                                 )
-
                                 Text(
                                     text = "신규",
                                     modifier = Modifier
-                                        .align(Alignment.TopStart)
+                                        .width(50.dp)
+                                        .align(Alignment.BottomEnd)
                                         .padding(8.dp)
-                                        .background(BoxText),
+                                        .background(
+                                            color = BoxText,
+                                            shape = RoundedCornerShape(8.dp)
+                                        ),
                                     color = Title,
                                     fontWeight = FontWeight(700),
                                     fontSize = 12.sp,
+                                    textAlign = TextAlign.Center,
                                 )
                             }
 
@@ -441,9 +480,10 @@ fun HomeView(
             )
 
             Column(
-                modifier = Modifier.padding(
-                    top = 8.dp, bottom = 40.dp
-                ),
+                modifier = Modifier
+                    .padding(
+                        top = 8.dp, bottom = 40.dp
+                    ),
             ) {
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -482,31 +522,42 @@ fun HomeView(
                                 )
                             }
 
-                            Text(
-                                text = "&아트워크 타이틀",
-                                modifier = Modifier.padding(
-                                    top = 4.dp, bottom = 4.dp
-                                ),
-                                color = Title,
-                                fontWeight = FontWeight(500),
-                                fontSize = 16.sp,
-                            )
-                            Text(
-                                text = "&아티스트 타이틀",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = SubTitle,
-                                fontWeight = FontWeight(400),
-                                fontSize = 14.sp,
-                            )
-
-                            Button(onClick = { }) {
-                                Text(
-                                    text = "저장",
-                                    color = Color.White,
-                                    fontWeight = FontWeight(500),
-                                    fontSize = 14.sp,
-                                )
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                modifier = Modifier.fillMaxWidth(),
+                            ) {
+                                Column {
+                                    Text(
+                                        text = "&아트워크 타이틀",
+                                        modifier = Modifier.padding(
+                                            top = 4.dp, bottom = 4.dp
+                                        ),
+                                        color = Title,
+                                        fontWeight = FontWeight(500),
+                                        fontSize = 16.sp,
+                                    )
+                                    Text(
+                                        text = "&아티스트 타이틀",
+                                        modifier = Modifier.padding(bottom = 4.dp),
+                                        color = SubTitle,
+                                        fontWeight = FontWeight(400),
+                                        fontSize = 14.sp,
+                                    )
+                                }
+                                Button(
+                                    onClick = {},
+                                    shape = RoundedCornerShape(8.dp),
+                                    colors = ButtonDefaults.buttonColors(Color.Blue),
+                                ) {
+                                    Text(
+                                        text = "저장",
+                                        color = Color.White,
+                                        fontWeight = FontWeight(500),
+                                        fontSize = 14.sp,
+                                    )
+                                }
                             }
+
                         } // 아이템 구성 UI
                     } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
                 } // 공개예정 큐레이션 Row 리스트
@@ -682,10 +733,13 @@ fun HomeView(
                 modifier = Modifier
                     .padding(bottom = 40.dp)
                     .fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(8.dp),
+                colors = ButtonDefaults.buttonColors(HomeButton),
             ) {
                 Text(
                     text = "모든 아트워크",
+                    modifier = Modifier
+                        .padding(top = 8.dp, bottom = 8.dp),
                     color = Title,
                     fontWeight = FontWeight(500),
                     fontSize = 16.sp,
@@ -703,7 +757,7 @@ fun HomeView(
             Column(
                 modifier = Modifier
                     .padding(
-                        top = 8.dp, bottom = 40.dp
+                        top = 8.dp, bottom = 60.dp
                     )
                     .fillMaxWidth(),
             ) {
@@ -711,12 +765,12 @@ fun HomeView(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    items(itemsList.size) {
+                    items(itemsRecommendArtistName.size) { it ->
                         Column {
                             Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
+                                AsyncImage(
+                                    model = itemsArtistProfileImage[it],
+                                    contentDescription = "추천 아티스트",
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
                                         .size(154.dp)
@@ -725,7 +779,7 @@ fun HomeView(
                             }
 
                             Text(
-                                text = "&아티스트 타이틀",
+                                text = itemsRecommendArtistName[it],
                                 modifier = Modifier
                                     .width(154.dp)
                                     .padding(top = 4.dp),
@@ -741,15 +795,17 @@ fun HomeView(
 
             Button(
                 onClick = {
-                    viewModel.getNetworkTest()
                 },
                 modifier = Modifier
                     .padding(bottom = 40.dp)
                     .fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(8.dp),
+                colors = ButtonDefaults.buttonColors(HomeButton),
             ) {
                 Text(
-                    text = "${textState.value}",
+                    text = "모든 아티스트",
+                    modifier = Modifier
+                        .padding(top = 8.dp, bottom = 8.dp),
                     color = Title,
                     fontWeight = FontWeight(500),
                     fontSize = 16.sp,
@@ -920,296 +976,68 @@ fun MainView() {
         ) {
             Spacer(modifier = Modifier.height(80.dp))
 
-            Text(
-                text = "추천 큐레이션",
-                color = Title,
-                fontWeight = FontWeight(700),
-                fontSize = 20.sp,
-            )
-
-            Column(
-                modifier = Modifier.padding(
-                    top = 8.dp, bottom = 40.dp
-                ),
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    items(itemsList.size) {
-                        Column(
-                            modifier = Modifier.background(Color.Green),
-                        ) {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
-                                )
-
-                                Icon(
-                                    painter = painterResource(id = R.drawable.icon_exhibition),
-                                    contentDescription = "",
-                                    modifier = Modifier
-                                        .align(Alignment.TopEnd)
-                                        .padding(4.dp),
-                                    tint = Color.White,
-                                )
-
-                                Text(
-                                    text = "1/8",
-                                    modifier = Modifier
-                                        .align(Alignment.BottomEnd)
-                                        .padding(4.dp)
-                                        .background(BoxText),
-                                    color = Title,
-                                    fontWeight = FontWeight(700),
-                                    fontSize = 8.sp,
-                                )
-                            }
-
-                            Text(
-                                text = "&작품명",
+                items(itemsList.size) {
+                    Column {
+                        Box {
+                            Image(
+                                painter = painterResource(id = R.drawable.img_empty),
+                                contentDescription = "",
+                                contentScale = ContentScale.Crop,
                                 modifier = Modifier
-                                    .padding(bottom = 4.dp)
-                                    .background(Color.Red),
+                                    .size(320.dp, 180.dp)
+                                    .clip(RoundedCornerShape(16.dp)),
+                            )
+
+                            Text(
+                                text = "D-7",
+                                modifier = Modifier
+                                    .align(Alignment.TopStart)
+                                    .padding(8.dp)
+                                    .background(BoxText),
                                 color = Title,
-                                fontWeight = FontWeight(500),
-                                fontSize = 16.sp,
-                                textAlign = TextAlign.Center,
-                            )
-                            Text(
-                                text = "&작가명 외 1명",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = SubTitle,
-                                fontWeight = FontWeight(400),
-                                fontSize = 14.sp,
-                            )
-                            Text(
-                                text = "&작품수 · &총감상시간",
-                                color = SubTitle,
-                                fontWeight = FontWeight(400),
+                                fontWeight = FontWeight(700),
                                 fontSize = 12.sp,
                             )
-                        } // 아이템 구성 UI
-                    } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
-                } // 추천 큐레이션 Row 리스트
-            } // 추천 큐레이션 UI
 
-            Text(
-                text = "새로운 아트워크",
-                color = Title,
-                fontWeight = FontWeight(700),
-                fontSize = 20.sp,
-            )
+                            Icon(
+                                painter = painterResource(id = R.drawable.icon_exhibition),
+                                contentDescription = "",
+                                modifier = Modifier
+                                    .align(Alignment.TopEnd)
+                                    .padding(8.dp)
+                                    .size(16.dp),
+                                tint = Color.White,
+                            )
+                        }
 
-            Column(
-                modifier = Modifier.padding(
-                    top = 8.dp, bottom = 40.dp
-                ),
-            ) {
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    items(itemsList.size) {
-                        Column {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
-                                )
-
+                        Row(
+                            horizontalArrangement = Arrangement.End,
+                            modifier = Modifier.fillMaxWidth(),
+                        ) {
+                            Column {
                                 Text(
-                                    text = "신규",
-                                    modifier = Modifier
-                                        .align(Alignment.TopStart)
-                                        .padding(4.dp)
-                                        .background(BoxText),
+                                    text = "&아트워크 타이틀",
+                                    modifier = Modifier.padding(
+                                        top = 4.dp, bottom = 4.dp
+                                    ),
                                     color = Title,
-                                    fontWeight = FontWeight(700),
-                                    fontSize = 8.sp,
+                                    fontWeight = FontWeight(500),
+                                    fontSize = 16.sp,
                                 )
-                            }
-
-                            Text(
-                                text = "&작품명",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = Title,
-                                fontWeight = FontWeight(500),
-                                fontSize = 16.sp,
-                            )
-                            Text(
-                                text = "&작가명 외 1명",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = SubTitle,
-                                fontWeight = FontWeight(400),
-                                fontSize = 14.sp,
-                            )
-                            Text(
-                                text = "&작품수 · &총감상시간",
-                                color = SubTitle,
-                                fontWeight = FontWeight(400),
-                                fontSize = 12.sp,
-                            )
-                        } // 아이템 구성 UI
-                    } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
-                } // 새로운 아트워크 Row 리스트
-            } // 새로운 아트워크 UI
-
-            Text(
-                text = "커피 한 잔 생각날 때",
-                color = Title,
-                fontWeight = FontWeight(700),
-                fontSize = 20.sp,
-            )
-
-            Text(
-                text = "&작품수 · &감상시간",
-                color = SubTitle,
-                fontWeight = FontWeight(400),
-                fontSize = 12.sp,
-            )
-
-            Column(
-                modifier = Modifier.padding(
-                    top = 8.dp, bottom = 40.dp
-                ),
-            ) {
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    items(itemsList.size) {
-                        Column {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
-                                )
-                            }
-
-                            Text(
-                                text = "&아트워크 타이틀",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = Title,
-                                fontWeight = FontWeight(500),
-                                fontSize = 16.sp,
-                            )
-                            Text(
-                                text = "&아티스트 타이틀",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = SubTitle,
-                                fontWeight = FontWeight(400),
-                                fontSize = 14.sp,
-                            )
-                        } // 아이템 구성 UI
-                    } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
-                } // 커피 한 잔 생각날 때 Row 리스트
-            } // 커피 한 잔 생각날 때 UI
-
-            Text(
-                text = "Jazz Today",
-                color = Title,
-                fontWeight = FontWeight(700),
-                fontSize = 20.sp,
-            )
-            Text(
-                text = "&작품수 · &감상시간",
-                color = SubTitle,
-                fontWeight = FontWeight(400),
-                fontSize = 12.sp,
-            )
-
-            Column(
-                modifier = Modifier.padding(
-                    top = 8.dp, bottom = 40.dp
-                ),
-            ) {
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    items(itemsList.size) {
-                        Column {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
-                                )
-                            }
-
-                            Text(
-                                text = "&아트워크 타이틀",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = Title,
-                                fontWeight = FontWeight(500),
-                                fontSize = 16.sp,
-                            )
-                            Text(
-                                text = "&아티스트 타이틀",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = SubTitle,
-                                fontWeight = FontWeight(400),
-                                fontSize = 14.sp,
-                            )
-                        } // 아이템 구성 UI
-                    } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
-                } // Jazz Today Row 리스트
-            } // Jazz Today UI
-
-            Text(
-                text = "공개예정 큐레이션", color = Title, fontWeight = FontWeight(700), fontSize = 20.sp
-            )
-
-            Column(
-                modifier = Modifier.padding(
-                    top = 8.dp, bottom = 40.dp
-                ),
-            ) {
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    items(itemsList.size) {
-                        Column {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
-                                )
-
                                 Text(
-                                    text = "D-7",
-                                    modifier = Modifier
-                                        .align(Alignment.TopStart)
-                                        .padding(4.dp)
-                                        .background(BoxText),
-                                    color = Title,
-                                    fontWeight = FontWeight(700),
-                                    fontSize = 8.sp,
-                                )
-
-                                Icon(
-                                    painter = painterResource(id = R.drawable.icon_exhibition),
-                                    contentDescription = "",
-                                    modifier = Modifier
-                                        .align(Alignment.TopEnd)
-                                        .padding(4.dp),
-                                    tint = Color.White,
+                                    text = "&아티스트 타이틀",
+                                    modifier = Modifier.padding(bottom = 4.dp),
+                                    color = SubTitle,
+                                    fontWeight = FontWeight(400),
+                                    fontSize = 14.sp,
                                 )
                             }
-
-                            Text(
-                                text = "&아트워크 타이틀",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = Title,
-                                fontWeight = FontWeight(500),
-                                fontSize = 16.sp,
-                            )
-                            Text(
-                                text = "&아티스트 타이틀",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = SubTitle,
-                                fontWeight = FontWeight(400),
-                                fontSize = 14.sp,
-                            )
-
-                            Button(onClick = { }) {
+                            Button(
+                                onClick = {},
+                            ) {
                                 Text(
                                     text = "저장",
                                     color = Color.White,
@@ -1217,233 +1045,10 @@ fun MainView() {
                                     fontSize = 14.sp,
                                 )
                             }
-                        } // 아이템 구성 UI
-                    } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
-                } // 공개예정 큐레이션 Row 리스트
-            } // 공개예정 큐레이션 UI
-
-            Text(
-                text = "봄의 아침을 맞이하며",
-                color = Title,
-                fontWeight = FontWeight(700),
-                fontSize = 20.sp,
-            )
-            Text(
-                text = "&작품수 · &감상시간",
-                color = SubTitle,
-                fontWeight = FontWeight(400),
-                fontSize = 12.sp,
-            )
-
-            Column(
-                modifier = Modifier.padding(
-                    top = 8.dp, bottom = 40.dp
-                ),
-            ) {
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    items(itemsList.size) {
-                        Column {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
-                                )
-                            }
-
-                            Text(
-                                text = "&아트워크 타이틀",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = Title,
-                                fontWeight = FontWeight(500),
-                                fontSize = 16.sp,
-                            )
-                            Text(
-                                text = "&아티스트 타이틀",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = SubTitle,
-                                fontWeight = FontWeight(400),
-                                fontSize = 14.sp,
-                            )
-                        } // 아이템 구성 UI
-                    } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
-                } // 봄의 아침을 맞이하며 Row 리스트
-            } // 봄의 아침을 맞이하며 UI
-
-            Text(
-                text = "집중의 시간",
-                color = Title,
-                fontWeight = FontWeight(700),
-                fontSize = 20.sp,
-            )
-            Text(
-                text = "&작품수 · &감상시간",
-                color = SubTitle,
-                fontWeight = FontWeight(400),
-                fontSize = 12.sp,
-            )
-
-            Column(
-                modifier = Modifier.padding(
-                    top = 8.dp, bottom = 40.dp
-                ),
-            ) {
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    items(itemsList.size) {
-                        Column {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
-                                )
-                            }
-
-                            Text(
-                                text = "&아트워크 타이틀",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = Title,
-                                fontWeight = FontWeight(500),
-                                fontSize = 16.sp,
-                            )
-                            Text(
-                                text = "&아티스트 타이틀",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = SubTitle,
-                                fontWeight = FontWeight(400),
-                                fontSize = 14.sp,
-                            )
-                        } // 아이템 구성 UI
-                    } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
-                } // 집중의 시간 Row 리스트
-            } // 집중의 시간 UI
-
-            Text(
-                text = "내적 Groove 좀 타볼까요",
-                color = Title,
-                fontWeight = FontWeight(700),
-                fontSize = 20.sp,
-            )
-            Text(
-                text = "&작품수 · &감상시간",
-                color = SubTitle,
-                fontWeight = FontWeight(400),
-                fontSize = 12.sp,
-            )
-
-            Column(
-                modifier = Modifier.padding(
-                    top = 8.dp, bottom = 40.dp
-                ),
-            ) {
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    items(itemsList.size) {
-                        Column {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
-                                )
-                            }
-
-                            Text(
-                                text = "&아트워크 타이틀",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = Title,
-                                fontWeight = FontWeight(500),
-                                fontSize = 16.sp,
-                            )
-                            Text(
-                                text = "&아티스트 타이틀",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = SubTitle,
-                                fontWeight = FontWeight(400),
-                                fontSize = 14.sp,
-                            )
-                        } // 아이템 구성 UI
-                    } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
-                } // 내적 Groove 좀 타볼까요 Row 리스트
-            } // 내적 Groove 좀 타볼까요 UI
-
-            Button(
-                onClick = {},
-                modifier = Modifier
-                    .padding(bottom = 40.dp)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                Text(
-                    text = "모든 아트워크",
-                    color = Title,
-                    fontWeight = FontWeight(500),
-                    fontSize = 16.sp,
-                    textAlign = TextAlign.Center,
-                )
-            } // 모든 아트워크 버튼 UI
-
-            Text(
-                text = "추천 아티스트",
-                color = Title,
-                fontWeight = FontWeight(700),
-                fontSize = 20.sp,
-            )
-
-            Column(
-                modifier = Modifier
-                    .padding(
-                        top = 8.dp, bottom = 40.dp
-                    )
-                    .fillMaxWidth(),
-            ) {
-                LazyRow(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    items(itemsList.size) {
-                        Column {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier
-                                        .size(200.dp)
-                                        .clip(CircleShape),
-                                )
-                            }
-
-                            Text(
-                                text = "&아티스트 타이틀",
-                                modifier = Modifier.padding(bottom = 4.dp),
-                                color = Title,
-                                fontWeight = FontWeight(500),
-                                fontSize = 16.sp,
-                                textAlign = TextAlign.Center,
-                            )
-                        } // 아이템 구성 UI
-                    } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
-                } // 추천 아티스트 Row 리스트
-            } // 추천 아티스트 UI
-
-            Button(
-                onClick = {},
-                modifier = Modifier
-                    .padding(bottom = 40.dp)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                Text(
-                    text = "모든 아티스트",
-                    color = Title,
-                    fontWeight = FontWeight(500),
-                    fontSize = 16.sp,
-                    textAlign = TextAlign.Center,
-                )
-            } // 모든 아티스트 버튼 UI
+                        }
+                    }
+                }
+            }
 
             Box(
                 modifier = Modifier.background(Color.White),

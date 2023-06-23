@@ -124,4 +124,7 @@ dependencies {
     // okhttp3
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+
+    // Kotlin 코루틴에서 지원하는 이미지 로드 라이브러리
+    implementation("io.coil-kt:coil-compose:2.4.0")
 }

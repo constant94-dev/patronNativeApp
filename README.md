@@ -48,3 +48,7 @@
   https://developer.android.com/kotlin/flow?hl=ko</h4>
 </p>
 
+<p>
+  <h4>[StateFlow 및 SharedFlow]<br/>
+  https://developer.android.com/kotlin/flow/stateflow-and-sharedflow?hl=ko</h4>
+</p>
