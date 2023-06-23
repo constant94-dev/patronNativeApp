@@ -1,23 +1,11 @@
 package digital.patron.app_patronnativeapp.data.repository
 
-import android.util.Log
-import digital.patron.app_patronnativeapp.data.network.model.NetworkHome
-import digital.patron.app_patronnativeapp.data.network.model.NetworkHomeNewArtwork
 import digital.patron.app_patronnativeapp.data.network.model.NetworkTest
 import digital.patron.app_patronnativeapp.data.network.remote.HomeNetworkApi
 import digital.patron.app_patronnativeapp.data.network.retrofit.RetrofitNetwork
 import digital.patron.app_patronnativeapp.domain.dto.ExhibitionDto
-import digital.patron.app_patronnativeapp.domain.model.Result
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.flowOn
-import retrofit2.Response
 
 
 /**

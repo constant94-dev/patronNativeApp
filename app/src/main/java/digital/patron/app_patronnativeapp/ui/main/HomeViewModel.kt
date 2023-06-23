@@ -3,25 +3,15 @@ package digital.patron.app_patronnativeapp.ui.main
 import android.app.Application
 import android.util.Log
 import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import digital.patron.app_patronnativeapp.data.network.model.NetworkHome
-import digital.patron.app_patronnativeapp.data.network.model.NetworkHomeNewArtwork
 import digital.patron.app_patronnativeapp.data.network.model.NetworkTest
 import digital.patron.app_patronnativeapp.data.repository.HomeContentsRepository
-import digital.patron.app_patronnativeapp.domain.dto.ExhibitionDto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
 //import digital.patron.app_patronnativeapp.domain.model.Result
-import digital.patron.app_patronnativeapp.domain.model.Result
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
