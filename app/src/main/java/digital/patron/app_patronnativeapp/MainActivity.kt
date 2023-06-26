@@ -8,6 +8,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import digital.patron.app_patronnativeapp.domain.util.HomeAndroidViewModelFactory
 import digital.patron.app_patronnativeapp.ui.main.HomeView
 import digital.patron.app_patronnativeapp.ui.main.HomeViewModel
+import digital.patron.app_patronnativeapp.ui.player.curation.CurationView
 
 @ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
@@ -21,7 +22,8 @@ class MainActivity : ComponentActivity() {
             val viewModel: HomeViewModel = viewModel(
                 factory = HomeAndroidViewModelFactory(application),
             )
-            HomeView(viewModel = viewModel)
+            //HomeView(viewModel = viewModel)
+            CurationView()
         }
     }
 }

@@ -109,7 +109,8 @@ fun HomeView(
 
     // 추천 아티스트 UI 데이터
     val itemsArtistProfileImage = viewModel.artistProfileImage.value ?: listOf("ArtistProfileImage")
-    val itemsRecommendArtistName = viewModel.recommendArtistName.value ?: listOf("RecommendArtistName")
+    val itemsRecommendArtistName =
+        viewModel.recommendArtistName.value ?: listOf("RecommendArtistName")
 
 
     val itemsList = (1..15).toList()
@@ -130,11 +131,8 @@ fun HomeView(
                             modifier = Modifier.weight(1f),
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.icon_logo),
+                                painter = painterResource(id = R.drawable.icon_logo_symbol),
                                 contentDescription = "Patron logo.",
-                                modifier = Modifier
-                                    .width(34.dp)
-                                    .height(20.dp),
                                 colorFilter = ColorFilter.tint(Color.White),
                             )
                         }
@@ -146,10 +144,7 @@ fun HomeView(
                             modifier = Modifier.weight(1f),
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.icon_dump_profile),
-                                modifier = Modifier
-                                    .width(34.dp)
-                                    .height(20.dp),
+                                painter = painterResource(id = R.drawable.icon_library),
                                 contentDescription = "Patron dump profile.",
                             )
                         }
@@ -163,9 +158,6 @@ fun HomeView(
                             Image(
                                 painter = painterResource(id = R.drawable.icon_search),
                                 contentDescription = "Patron search.",
-                                modifier = Modifier
-                                    .width(34.dp)
-                                    .height(20.dp),
                                 colorFilter = ColorFilter.tint(Color.White),
                             )
                         }
@@ -179,9 +171,6 @@ fun HomeView(
                             Image(
                                 painter = painterResource(id = R.drawable.icon_menu),
                                 contentDescription = "Patron menu.",
-                                modifier = Modifier
-                                    .width(34.dp)
-                                    .height(20.dp),
                                 colorFilter = ColorFilter.tint(Color.White),
                             )
                         }
@@ -524,43 +513,52 @@ fun HomeView(
 
                             Row(
                                 horizontalArrangement = Arrangement.SpaceBetween,
-                                modifier = Modifier.fillMaxWidth(),
+                                modifier = Modifier.width(320.dp),
                             ) {
-                                Column {
-                                    Text(
-                                        text = "&아트워크 타이틀",
-                                        modifier = Modifier.padding(
-                                            top = 4.dp, bottom = 4.dp
-                                        ),
-                                        color = Title,
-                                        fontWeight = FontWeight(500),
-                                        fontSize = 16.sp,
-                                    )
-                                    Text(
-                                        text = "&아티스트 타이틀",
-                                        modifier = Modifier.padding(bottom = 4.dp),
-                                        color = SubTitle,
-                                        fontWeight = FontWeight(400),
-                                        fontSize = 14.sp,
-                                    )
-                                }
-                                Button(
-                                    onClick = {},
-                                    shape = RoundedCornerShape(8.dp),
-                                    colors = ButtonDefaults.buttonColors(Color.Blue),
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
                                 ) {
-                                    Text(
-                                        text = "저장",
-                                        color = Color.White,
-                                        fontWeight = FontWeight(500),
-                                        fontSize = 14.sp,
-                                    )
+                                    Column(
+                                        modifier = Modifier
+                                            .align(Alignment.CenterStart),
+                                    ) {
+                                        Text(
+                                            text = "&아트워크 타이틀",
+                                            modifier = Modifier.padding(
+                                                top = 4.dp, bottom = 4.dp
+                                            ),
+                                            color = Title,
+                                            fontWeight = FontWeight(500),
+                                            fontSize = 16.sp,
+                                        )
+                                        Text(
+                                            text = "&아티스트 타이틀",
+                                            modifier = Modifier.padding(bottom = 4.dp),
+                                            color = SubTitle,
+                                            fontWeight = FontWeight(400),
+                                            fontSize = 14.sp,
+                                        )
+                                    }
+                                    Button(
+                                        onClick = {},
+                                        modifier = Modifier
+                                            .align(Alignment.CenterEnd),
+                                        shape = RoundedCornerShape(8.dp),
+                                        colors = ButtonDefaults.buttonColors(Color.Blue),
+                                    ) {
+                                        Text(
+                                            text = "저장",
+                                            color = Color.White,
+                                            fontWeight = FontWeight(500),
+                                            fontSize = 14.sp,
+                                        )
+                                    }
                                 }
                             }
-
-                        } // 아이템 구성 UI
-                    } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
-                } // 공개예정 큐레이션 Row 리스트
+                        }
+                    } // 아이템 구성 UI
+                } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
             } // 공개예정 큐레이션 UI
 
             Text(
@@ -878,146 +876,66 @@ fun HomeView(
     } // Scaffold function end
 } // MainView function end
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@ExperimentalMaterial3Api
 @Preview(showBackground = true)
 @Composable
-fun MainView() {
-
-    val vtScrollState = rememberScrollState()
-
+fun HomeView() {
     val itemsList = (1..15).toList()
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "") },
-                navigationIcon = {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 14.dp, start = 20.dp, end = 20.dp),
-                        horizontalArrangement = Arrangement.Start,
-                    ) {
-                        IconButton(
-                            onClick = {},
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.icon_logo),
-                                contentDescription = "Patron logo.",
-                                modifier = Modifier
-                                    .width(34.dp)
-                                    .height(20.dp),
-                                colorFilter = ColorFilter.tint(Color.White),
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.weight(6f)) // 60% width as the parent
-
-                        IconButton(
-                            onClick = {},
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.icon_dump_profile),
-                                modifier = Modifier
-                                    .width(34.dp)
-                                    .height(20.dp),
-                                contentDescription = "Patron dump profile.",
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.weight(0.5f))
-
-                        IconButton(
-                            onClick = {},
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.icon_search),
-                                contentDescription = "Patron search.",
-                                modifier = Modifier
-                                    .width(34.dp)
-                                    .height(20.dp),
-                                colorFilter = ColorFilter.tint(Color.White),
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.weight(0.5f))
-
-                        IconButton(
-                            onClick = {},
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.icon_menu),
-                                contentDescription = "Patron menu.",
-                                modifier = Modifier
-                                    .width(34.dp)
-                                    .height(20.dp),
-                                colorFilter = ColorFilter.tint(Color.White),
-                            )
-                        }
-
-                    } // Row end
-                }, // navigation end
-                colors = TopAppBarDefaults.largeTopAppBarColors(containerColor = Color(R.color.background)),
-            )
-        }, // topBar end
-        containerColor = Color(R.color.background),
+    Column(
+        modifier = Modifier
+            .padding(
+                top = 8.dp, bottom = 40.dp
+            ),
     ) {
-
-        Column(
-            modifier = Modifier
-                .padding(start = 8.dp)
-                .verticalScroll(vtScrollState)
-                .fillMaxSize(),
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Spacer(modifier = Modifier.height(80.dp))
+            items(itemsList.size) {
+                Column {
+                    Box {
+                        Image(
+                            painter = painterResource(id = R.drawable.img_empty),
+                            contentDescription = "",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .size(320.dp, 180.dp)
+                                .clip(RoundedCornerShape(16.dp)),
+                        )
 
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                items(itemsList.size) {
-                    Column {
-                        Box {
-                            Image(
-                                painter = painterResource(id = R.drawable.img_empty),
-                                contentDescription = "",
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier
-                                    .size(320.dp, 180.dp)
-                                    .clip(RoundedCornerShape(16.dp)),
-                            )
+                        Text(
+                            text = "D-7",
+                            modifier = Modifier
+                                .align(Alignment.TopStart)
+                                .padding(8.dp)
+                                .background(BoxText),
+                            color = Title,
+                            fontWeight = FontWeight(700),
+                            fontSize = 12.sp,
+                        )
 
-                            Text(
-                                text = "D-7",
-                                modifier = Modifier
-                                    .align(Alignment.TopStart)
-                                    .padding(8.dp)
-                                    .background(BoxText),
-                                color = Title,
-                                fontWeight = FontWeight(700),
-                                fontSize = 12.sp,
-                            )
+                        Icon(
+                            painter = painterResource(id = R.drawable.icon_exhibition),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .align(Alignment.TopEnd)
+                                .padding(8.dp)
+                                .size(16.dp),
+                            tint = Color.White,
+                        )
+                    }
 
-                            Icon(
-                                painter = painterResource(id = R.drawable.icon_exhibition),
-                                contentDescription = "",
-                                modifier = Modifier
-                                    .align(Alignment.TopEnd)
-                                    .padding(8.dp)
-                                    .size(16.dp),
-                                tint = Color.White,
-                            )
-                        }
-
-                        Row(
-                            horizontalArrangement = Arrangement.End,
-                            modifier = Modifier.fillMaxWidth(),
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.width(320.dp),
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth(),
                         ) {
-                            Column {
+                            Column(
+                                modifier = Modifier
+                                    .align(Alignment.CenterStart),
+                            ) {
                                 Text(
                                     text = "&아트워크 타이틀",
                                     modifier = Modifier.padding(
@@ -1037,6 +955,10 @@ fun MainView() {
                             }
                             Button(
                                 onClick = {},
+                                modifier = Modifier
+                                    .align(Alignment.CenterEnd),
+                                shape = RoundedCornerShape(8.dp),
+                                colors = ButtonDefaults.buttonColors(Color.Blue),
                             ) {
                                 Text(
                                     text = "저장",
@@ -1048,69 +970,7 @@ fun MainView() {
                         }
                     }
                 }
-            }
-
-            Box(
-                modifier = Modifier.background(Color.White),
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(
-                            top = 40.dp, bottom = 40.dp, start = 20.dp, end = 20.dp
-                        )
-                        .fillMaxWidth(),
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(
-                            17.dp, alignment = Alignment.Start
-                        ),
-                    ) {
-                        Text(
-                            text = "서비스이용약관",
-                            color = FooterTitle,
-                        )
-                        Text(
-                            text = "개인정보 처리 방침",
-                            color = FooterTitle,
-                        )
-                        Text(
-                            text = "계정 운영정책",
-                            color = FooterTitle,
-                        )
-                    }
-
-                    Spacer(
-                        modifier = Modifier.padding(top = 20.dp),
-                    )
-
-                    Column {
-                        Text(
-                            text = "주식회사 노다멘",
-                            color = FooterTitle,
-                            fontWeight = FontWeight.Bold,
-                        )
-                        Text(
-                            text = "Copyright © 2023Nodamen Inc.",
-                            modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
-                            color = FooterSubTitle,
-                        )
-                        Text(
-                            text = "사업자등록번호 : 489-88-00555 | 대표이사 : 이원준 |  통신판매업신고 : 제2017-제주이도2-0100호 사업자정보확인\n" + " 주소 : 서울특별시 서대문구 연희로 134-1 제임스빌 5층 | 대표전화 : 070 7724 1703",
-                            color = FooterSubTitle,
-                        )
-
-                        Spacer(
-                            modifier = Modifier.padding(top = 8.dp),
-                        )
-
-                        Text(
-                            text = "고객 help@patron.digital ㅣ 작가 artist@patron.digital\n" + "전화 070-7724-1703 (주중 09:00 ~ 17:00)",
-                            color = FooterSubTitle,
-                        )
-                    }
-                } // 풋터 본문 레이아웃 끝
-            } // 풋터 전체 영역 레이아웃 끝
-        } // 메인페이지 상단 바 / 본문 / 풋터 구조를 잡기위한 레이아웃 끝
-    } // Scaffold function end
-} // MainView function end
+            } // 아이템 구성 UI
+        } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
+    } // 공개예정 큐레이션 UI
+}
