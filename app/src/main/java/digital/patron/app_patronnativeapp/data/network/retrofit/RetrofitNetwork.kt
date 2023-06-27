@@ -14,8 +14,8 @@ import retrofit2.converter.gson.GsonConverterFactory
  * Retrofit을 사용하여 Remote API 통신을 위한 싱글톤 Retrofit 인스턴스를 생성하는 데 사용
  * */
 object RetrofitNetwork {
-    //private const val BaseUrl = "http://20.249.92.52:8088/" //  API 요청의 기본 URL
-    private const val BaseUrl = "http://183.96.128.211:8088/"
+    private const val BaseUrl = "http://20.249.92.52:8088/" //  API 요청의 기본 URL
+    //private const val BaseUrl = "http://183.96.128.211:8088/"
 
     private val okHttpClient: OkHttpClient by lazy {
         val loggingInterceptor = HttpLoggingInterceptor().apply {

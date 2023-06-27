@@ -3,6 +3,7 @@ package digital.patron.app_patronnativeapp.ui.main
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,6 +33,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,9 +48,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 
 import digital.patron.app_patronnativeapp.R
+import digital.patron.app_patronnativeapp.ui.common.HomeContentsReady
 
 import digital.patron.app_patronnativeapp.ui.theme.BoxText
 import digital.patron.app_patronnativeapp.ui.theme.FooterSubTitle
@@ -92,25 +98,33 @@ import digital.patron.app_patronnativeapp.ui.theme.Title
 @ExperimentalMaterial3Api
 @Composable
 fun HomeView(
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel,
+    navController: NavController,
 ) {
     val vtScrollState = rememberScrollState()
 
     val textStateFlow = viewModel.dataFlow.collectAsState().value
 
     // 큐레이션 UI 데이터
-    val itemsCurationThumb = viewModel.curationThumb.value ?: listOf("itemsQuration")
-    val itemsCurationThumbName = viewModel.curationThumbName.value ?: listOf("itemsExName")
-    val itemsCurationArtistName = viewModel.curationArtistName.value ?: listOf("itemsArtistName")
-    val itemsCurationArtistCount = viewModel.curationArtistCount.value ?: listOf(0)
+    val itemsCurationThumb = viewModel.curationThumb.value
+    val itemsCurationThumbName = viewModel.curationThumbName.value
+    val itemsCurationArtistName = viewModel.curationArtistName.value
+    val itemsCurationArtistCount = viewModel.curationArtistCount.value
 
     // 새로운 아트워크 UI 데이터
-    val itemsNewlyArtwork = viewModel.newlyArtworks.value ?: listOf("NewlyArtwork")
+    val itemsNewlyArtwork = viewModel.newlyArtworks.value
 
     // 추천 아티스트 UI 데이터
-    val itemsArtistProfileImage = viewModel.artistProfileImage.value ?: listOf("ArtistProfileImage")
+    val itemsArtistProfileImage = viewModel.artistProfileImage.value
     val itemsRecommendArtistName =
-        viewModel.recommendArtistName.value ?: listOf("RecommendArtistName")
+        viewModel.recommendArtistName.value
+
+    val showDialog = remember { mutableStateOf(false) }
+    if (showDialog.value) {
+        HomeContentsReady(
+            visible = showDialog.value,
+            onDismissRequest = { showDialog.value = false })
+    }
 
 
     val itemsList = (1..15).toList()
@@ -140,7 +154,9 @@ fun HomeView(
                         Spacer(modifier = Modifier.weight(6f)) // 60% width as the parent
 
                         IconButton(
-                            onClick = {},
+                            onClick = {
+                                showDialog.value = true
+                            },
                             modifier = Modifier.weight(1f),
                         ) {
                             Image(
@@ -152,7 +168,9 @@ fun HomeView(
                         Spacer(modifier = Modifier.weight(0.5f))
 
                         IconButton(
-                            onClick = {},
+                            onClick = {
+                                navController.navigate("search")
+                            },
                             modifier = Modifier.weight(1f),
                         ) {
                             Image(
@@ -165,7 +183,9 @@ fun HomeView(
                         Spacer(modifier = Modifier.weight(0.5f))
 
                         IconButton(
-                            onClick = {},
+                            onClick = {
+                                showDialog.value = true
+                            },
                             modifier = Modifier.weight(1f),
                         ) {
                             Image(
@@ -215,7 +235,10 @@ fun HomeView(
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
                                         .size(320.dp, 180.dp)
-                                        .clip(RoundedCornerShape(16.dp)),
+                                        .clip(RoundedCornerShape(16.dp))
+                                        .clickable {
+                                                   navController.navigate("player")
+                                        },
                                 )
 
                                 Icon(
@@ -875,6 +898,7 @@ fun HomeView(
         } // 메인페이지 상단 바 / 본문 / 풋터 구조를 잡기위한 레이아웃 끝
     } // Scaffold function end
 } // MainView function end
+
 
 @Preview(showBackground = true)
 @Composable

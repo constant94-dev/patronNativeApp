@@ -1,7 +1,6 @@
-package digital.patron.app_patronnativeapp.ui.player.curation
+package digital.patron.app_patronnativeapp.ui.player
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -28,28 +26,27 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Center
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import digital.patron.app_patronnativeapp.R
 import digital.patron.app_patronnativeapp.ui.theme.SubTitle
 import digital.patron.app_patronnativeapp.ui.theme.Title
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalMaterial3Api
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun CurationView() {
+fun PlayerView(
+    navController: NavController,
+){
     val vtScrollState = rememberScrollState()
 
     Scaffold(
@@ -64,7 +61,9 @@ fun CurationView() {
                         horizontalArrangement = Arrangement.Start,
                     ) {
                         IconButton(
-                            onClick = {},
+                            onClick = {
+                                      navController.navigate("home")
+                            },
                             modifier = Modifier.weight(1f),
                         ) {
                             Image(
@@ -143,7 +142,7 @@ fun CurationView() {
                 IconButton(
                     onClick = {},
                     modifier = Modifier
-                        .align(Center),
+                        .align(Alignment.Center),
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.icon_player_play),
@@ -258,7 +257,7 @@ fun CurationView() {
                         )
                         Column(
                             modifier = Modifier
-                                .align(CenterVertically)
+                                .align(Alignment.CenterVertically)
                                 .weight(0.7f)
                                 .padding(start = 8.dp),
                         ) {
@@ -279,7 +278,7 @@ fun CurationView() {
                             painter = painterResource(id = R.drawable.icon_show_option_white),
                             contentDescription = "player list.",
                             modifier = Modifier
-                                .align(CenterVertically)
+                                .align(Alignment.CenterVertically)
                                 .weight(0.1f),
                             colorFilter = ColorFilter.tint(Color.White),
                         )
@@ -334,85 +333,5 @@ fun CurationView() {
 
             } // 콘텐츠 전체 UI 끝
         }
-
-
-
-    } // Scaffold UI 끝
-}
-
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@ExperimentalMaterial3Api
-@Preview(showBackground = true)
-@Composable
-fun CureationView() {
-    val vtScrollState = rememberScrollState()
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "") },
-                navigationIcon = {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 14.dp, start = 20.dp, end = 20.dp),
-                        horizontalArrangement = Arrangement.Start,
-                    ) {
-                        IconButton(
-                            onClick = {},
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.icon_go_back),
-                                contentDescription = "Patron logo.",
-                                colorFilter = ColorFilter.tint(Color.White),
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.weight(6f)) // 60% width as the parent
-
-                        IconButton(
-                            onClick = {},
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.icon_library),
-                                contentDescription = "Patron dump profile.",
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.weight(0.5f))
-
-                        IconButton(
-                            onClick = {},
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.icon_search),
-                                contentDescription = "Patron search.",
-                                colorFilter = ColorFilter.tint(Color.White),
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.weight(0.5f))
-
-                        IconButton(
-                            onClick = {},
-                            modifier = Modifier.weight(1f),
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.icon_menu),
-                                contentDescription = "Patron menu.",
-                                colorFilter = ColorFilter.tint(Color.White),
-                            )
-                        }
-
-                    } // Row end
-                }, // navigation end
-                colors = TopAppBarDefaults.largeTopAppBarColors(containerColor = Color(R.color.background)),
-            )
-        }, // topBar end
-        containerColor = Color(R.color.background),
-    ) {
     } // Scaffold UI 끝
 }

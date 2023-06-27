@@ -18,3 +18,4 @@ val FooterSubTitle = Color(0x70707070)
 
 val BoxText = Color(0x46464646)
 val HomeButton = Color(0x47474747)
+val SearchInputField = Color(0x47474747)

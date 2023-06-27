@@ -3,6 +3,7 @@ package digital.patron.app_patronnativeapp.domain.util
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import digital.patron.app_patronnativeapp.data.repository.HomeContentsRepository
 import digital.patron.app_patronnativeapp.ui.main.HomeViewModel
 
