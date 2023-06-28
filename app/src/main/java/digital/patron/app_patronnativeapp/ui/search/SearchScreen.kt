@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import digital.patron.app_patronnativeapp.R
+import digital.patron.app_patronnativeapp.ui.common.HomeContentsReady
 import digital.patron.app_patronnativeapp.ui.theme.HomeButton
 import digital.patron.app_patronnativeapp.ui.theme.SearchInputField
 import digital.patron.app_patronnativeapp.ui.theme.SubTitle
@@ -52,7 +53,7 @@ fun SearchView(
 
     var searchText: String = ""
 
-    val iconViewtest = @Composable {
+    val iconSearchBadge = @Composable {
         IconButton(
             onClick = {
                 searchText = ""
@@ -64,6 +65,13 @@ fun SearchView(
                 colorFilter = ColorFilter.tint(Color.Gray),
             )
         }
+    }
+
+    val showDialog = remember { mutableStateOf(false) }
+    if (showDialog.value) {
+        HomeContentsReady(
+            visible = showDialog.value,
+            onDismissRequest = { showDialog.value = false })
     }
 
     Scaffold(
@@ -79,7 +87,7 @@ fun SearchView(
                     ) {
                         IconButton(
                             onClick = {
-                                      navController.navigate("home")
+                                navController.navigate("home")
                             },
                             modifier = Modifier.weight(1f),
                         ) {
@@ -93,7 +101,9 @@ fun SearchView(
                         Spacer(modifier = Modifier.weight(6f)) // 60% width as the parent
 
                         IconButton(
-                            onClick = {},
+                            onClick = {
+                                showDialog.value = true
+                            },
                             modifier = Modifier.weight(1f),
                         ) {
                             Image(
@@ -105,7 +115,9 @@ fun SearchView(
                         Spacer(modifier = Modifier.weight(0.5f))
 
                         IconButton(
-                            onClick = {},
+                            onClick = {
+                                navController.navigate("search")
+                            },
                             modifier = Modifier.weight(1f),
                         ) {
                             Image(
@@ -118,7 +130,9 @@ fun SearchView(
                         Spacer(modifier = Modifier.weight(0.5f))
 
                         IconButton(
-                            onClick = {},
+                            onClick = {
+                                showDialog.value = true
+                            },
                             modifier = Modifier.weight(1f),
                         ) {
                             Image(
@@ -157,7 +171,7 @@ fun SearchView(
                     .fillMaxWidth(),
                 textStyle = TextStyle(color = SubTitle),
                 placeholder = { Text(text = "어떤 예술을 찾으시나요") },
-                leadingIcon = if (searchText.isBlank()) iconViewtest else null,
+                leadingIcon = if (searchText.isBlank()) iconSearchBadge else null,
                 colors = TextFieldDefaults.textFieldColors(containerColor = SearchInputField),
             )
 

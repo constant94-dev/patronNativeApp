@@ -25,6 +25,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import digital.patron.app_patronnativeapp.R
+import digital.patron.app_patronnativeapp.ui.common.HomeContentsReady
 import digital.patron.app_patronnativeapp.ui.theme.SubTitle
 import digital.patron.app_patronnativeapp.ui.theme.Title
 
@@ -46,8 +49,16 @@ import digital.patron.app_patronnativeapp.ui.theme.Title
 @Composable
 fun PlayerView(
     navController: NavController,
-){
+) {
     val vtScrollState = rememberScrollState()
+
+    val showDialog = remember { mutableStateOf(false) }
+    if (showDialog.value) {
+        HomeContentsReady(
+            visible = showDialog.value,
+            onDismissRequest = { showDialog.value = false }
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -62,7 +73,7 @@ fun PlayerView(
                     ) {
                         IconButton(
                             onClick = {
-                                      navController.navigate("home")
+                                navController.navigate("home")
                             },
                             modifier = Modifier.weight(1f),
                         ) {
@@ -76,7 +87,9 @@ fun PlayerView(
                         Spacer(modifier = Modifier.weight(6f)) // 60% width as the parent
 
                         IconButton(
-                            onClick = {},
+                            onClick = {
+                                showDialog.value = true
+                            },
                             modifier = Modifier.weight(1f),
                         ) {
                             Image(
@@ -88,7 +101,9 @@ fun PlayerView(
                         Spacer(modifier = Modifier.weight(0.5f))
 
                         IconButton(
-                            onClick = {},
+                            onClick = {
+                                      navController.navigate("search")
+                            },
                             modifier = Modifier.weight(1f),
                         ) {
                             Image(
@@ -101,7 +116,9 @@ fun PlayerView(
                         Spacer(modifier = Modifier.weight(0.5f))
 
                         IconButton(
-                            onClick = {},
+                            onClick = {
+                                      showDialog.value = true
+                            },
                             modifier = Modifier.weight(1f),
                         ) {
                             Image(
@@ -334,4 +351,4 @@ fun PlayerView(
             } // 콘텐츠 전체 UI 끝
         }
     } // Scaffold UI 끝
-}
+} // player UI 끝

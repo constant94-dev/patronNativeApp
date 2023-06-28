@@ -45,6 +45,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -105,19 +106,55 @@ fun HomeView(
 
     val textStateFlow = viewModel.dataFlow.collectAsState().value
 
-    // 큐레이션 UI 데이터
+    // 추천 큐레이션 UI 데이터
     val itemsCurationThumb = viewModel.curationThumb.value
-    val itemsCurationThumbName = viewModel.curationThumbName.value
+    val itemsCurationArtworkTitle = viewModel.curationArtworkTitle.value
     val itemsCurationArtistName = viewModel.curationArtistName.value
     val itemsCurationArtistCount = viewModel.curationArtistCount.value
+
+    // 공개예정 큐레이션 UI 데이터
+    val itemsWaitingThumbnail = viewModel.waitingThumbnail.value
+    val itemsWaitingThumbArtworkTitle = viewModel.waitingThumbArtworkTitle.value
+    val itemsWaitingArtistName = viewModel.waitingArtistName.value
+    val itemsWaitingArtistCount = viewModel.waitingArtistCount.value
 
     // 새로운 아트워크 UI 데이터
     val itemsNewlyArtwork = viewModel.newlyArtworks.value
 
+    // 테마1 UI 데이터
+    val itemsTheme1ExhibitionTitle = viewModel.theme1ExhibitionTitle.value
+    val itemsTheme1Thumbnail = viewModel.theme1Thumbnail.value
+    val itemsTheme1ThumbArtworkTitle = viewModel.theme1ThumbArtworkTitle.value
+    val itemsTheme1ThumbArtistTitle = viewModel.theme1ThumbArtistTitle.value
+
+    // 테마2 UI 데이터
+    val itemsTheme2ExhibitionTitle = viewModel.theme2ExhibitionTitle.value
+    val itemsTheme2Thumbnail = viewModel.theme2Thumbnail.value
+    val itemsTheme2ThumbArtworkTitle = viewModel.theme2ThumbArtworkTitle.value
+    val itemsTheme2ThumbArtistTitle = viewModel.theme2ThumbArtistTitle.value
+
+    // 테마3 UI 데이터
+    val itemsTheme3ExhibitionTitle = viewModel.theme3ExhibitionTitle.value
+    val itemsTheme3Thumbnail = viewModel.theme3Thumbnail.value
+    val itemsTheme3ThumbArtworkTitle = viewModel.theme3ThumbArtworkTitle.value
+    val itemsTheme3ThumbArtistTitle = viewModel.theme3ThumbArtistTitle.value
+
+    // 테마4 UI 데이터
+    val itemsTheme4ExhibitionTitle = viewModel.theme4ExhibitionTitle.value
+    val itemsTheme4Thumbnail = viewModel.theme4Thumbnail.value
+    val itemsTheme4ThumbArtworkTitle = viewModel.theme4ThumbArtworkTitle.value
+    val itemsTheme4ThumbArtistTitle = viewModel.theme4ThumbArtistTitle.value
+
+    // 테마5 UI 데이터
+    val itemsTheme5ExhibitionTitle = viewModel.theme5ExhibitionTitle.value
+    val itemsTheme5Thumbnail = viewModel.theme5Thumbnail.value
+    val itemsTheme5ThumbArtworkTitle = viewModel.theme5ThumbArtworkTitle.value
+    val itemsTheme5ThumbArtistTitle = viewModel.theme5ThumbArtistTitle.value
+
     // 추천 아티스트 UI 데이터
     val itemsArtistProfileImage = viewModel.artistProfileImage.value
-    val itemsRecommendArtistName =
-        viewModel.recommendArtistName.value
+    val itemsArtistNameRecommend =
+        viewModel.artistNameRecommend.value
 
     val showDialog = remember { mutableStateOf(false) }
     if (showDialog.value) {
@@ -237,7 +274,7 @@ fun HomeView(
                                         .size(320.dp, 180.dp)
                                         .clip(RoundedCornerShape(16.dp))
                                         .clickable {
-                                                   navController.navigate("player")
+                                            navController.navigate("player")
                                         },
                                 )
 
@@ -269,7 +306,7 @@ fun HomeView(
                             }
 
                             Text(
-                                text = itemsCurationThumbName[it],
+                                text = itemsCurationArtworkTitle[it],
                                 modifier = Modifier.padding(
                                     bottom = 4.dp, top = 4.dp
                                 ),
@@ -287,7 +324,7 @@ fun HomeView(
                                 )
                             } else {
                                 Text(
-                                    text = "${itemsCurationArtistName[it]}",
+                                    text = itemsCurationArtistName[it],
                                     modifier = Modifier.padding(bottom = 4.dp),
                                     color = SubTitle,
                                     fontWeight = FontWeight(400),
@@ -377,7 +414,7 @@ fun HomeView(
             } // 새로운 아트워크 UI
 
             Text(
-                text = "커피 한 잔 생각날 때",
+                text = itemsTheme1ExhibitionTitle,
                 color = Title,
                 fontWeight = FontWeight(700),
                 fontSize = 20.sp,
@@ -398,12 +435,12 @@ fun HomeView(
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    items(itemsList.size) {
+                    items(itemsTheme1Thumbnail.size) {
                         Column {
                             Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
+                                AsyncImage(
+                                    model = itemsTheme1Thumbnail[it],
+                                    contentDescription = "테마1",
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
                                         .size(154.dp)
@@ -412,28 +449,36 @@ fun HomeView(
                             }
 
                             Text(
-                                text = "&아트워크 타이틀",
-                                modifier = Modifier.padding(
-                                    top = 4.dp, bottom = 4.dp
-                                ),
+                                text = itemsTheme1ThumbArtworkTitle[it],
+                                modifier = Modifier
+                                    .padding(
+                                        top = 4.dp, bottom = 4.dp
+                                    )
+                                    .width(154.dp),
                                 color = Title,
                                 fontWeight = FontWeight(500),
                                 fontSize = 16.sp,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1,
                             )
                             Text(
-                                text = "&아티스트 타이틀",
-                                modifier = Modifier.padding(bottom = 4.dp),
+                                text = itemsTheme1ThumbArtistTitle[it],
+                                modifier = Modifier
+                                    .padding(bottom = 4.dp)
+                                    .width(154.dp),
                                 color = SubTitle,
                                 fontWeight = FontWeight(400),
                                 fontSize = 14.sp,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1,
                             )
                         } // 아이템 구성 UI
                     } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
-                } // 커피 한 잔 생각날 때 Row 리스트
-            } // 커피 한 잔 생각날 때 UI
+                } // 테마1 Row 리스트
+            } // 테마1 UI 끝
 
             Text(
-                text = "Jazz Today",
+                text = itemsTheme2ExhibitionTitle,
                 color = Title,
                 fontWeight = FontWeight(700),
                 fontSize = 20.sp,
@@ -453,12 +498,12 @@ fun HomeView(
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    items(itemsList.size) {
+                    items(itemsTheme2Thumbnail.size) {
                         Column {
                             Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
+                                AsyncImage(
+                                    model = itemsTheme2Thumbnail[it],
+                                    contentDescription = "테마2",
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
                                         .size(154.dp)
@@ -467,28 +512,40 @@ fun HomeView(
                             }
 
                             Text(
-                                text = "&아트워크 타이틀",
-                                modifier = Modifier.padding(
-                                    top = 4.dp, bottom = 4.dp
-                                ),
+                                text = itemsTheme2ThumbArtworkTitle[it],
+                                modifier = Modifier
+                                    .padding(
+                                        top = 4.dp,
+                                        bottom = 4.dp
+                                    )
+                                    .width(154.dp),
                                 color = Title,
                                 fontWeight = FontWeight(500),
                                 fontSize = 16.sp,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1,
                             )
                             Text(
-                                text = "&아티스트 타이틀",
-                                modifier = Modifier.padding(bottom = 4.dp),
+                                text = itemsTheme2ThumbArtistTitle[it],
+                                modifier = Modifier
+                                    .padding(bottom = 4.dp)
+                                    .width(154.dp),
                                 color = SubTitle,
                                 fontWeight = FontWeight(400),
                                 fontSize = 14.sp,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1,
                             )
                         } // 아이템 구성 UI
                     } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
-                } // Jazz Today Row 리스트
-            } // Jazz Today UI
+                } // 테마2 Row 리스트
+            } // 테마2 UI 끝
 
             Text(
-                text = "공개예정 큐레이션", color = Title, fontWeight = FontWeight(700), fontSize = 20.sp
+                text = "공개예정 큐레이션",
+                color = Title,
+                fontWeight = FontWeight(700),
+                fontSize = 20.sp
             )
 
             Column(
@@ -500,16 +557,19 @@ fun HomeView(
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    items(itemsList.size) {
+                    items(itemsWaitingThumbnail.size) {
                         Column {
                             Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
+                                AsyncImage(
+                                    model = itemsWaitingThumbnail[it],
+                                    contentDescription = "공개예정 큐레이션",
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
                                         .size(320.dp, 180.dp)
-                                        .clip(RoundedCornerShape(16.dp)),
+                                        .clip(RoundedCornerShape(16.dp))
+                                        .clickable {
+                                            navController.navigate("player")
+                                        },
                                 )
 
                                 Text(
@@ -547,21 +607,47 @@ fun HomeView(
                                             .align(Alignment.CenterStart),
                                     ) {
                                         Text(
-                                            text = "&아트워크 타이틀",
-                                            modifier = Modifier.padding(
-                                                top = 4.dp, bottom = 4.dp
-                                            ),
+                                            text = itemsWaitingThumbArtworkTitle[it],
+                                            modifier = Modifier
+                                                .padding(
+                                                    top = 4.dp,
+                                                    bottom = 4.dp
+                                                )
+                                                .width(250.dp),
                                             color = Title,
                                             fontWeight = FontWeight(500),
                                             fontSize = 16.sp,
+                                            overflow = TextOverflow.Ellipsis,
+                                            maxLines = 1,
                                         )
-                                        Text(
-                                            text = "&아티스트 타이틀",
-                                            modifier = Modifier.padding(bottom = 4.dp),
-                                            color = SubTitle,
-                                            fontWeight = FontWeight(400),
-                                            fontSize = 14.sp,
-                                        )
+
+                                        if (itemsWaitingArtistCount[it] > 0) {
+                                            Text(
+                                                text = "${itemsWaitingArtistName[it]} 외 ${itemsWaitingArtistCount[it]}명",
+                                                modifier = Modifier
+                                                    .padding(bottom = 4.dp)
+                                                    .width(250.dp),
+                                                color = SubTitle,
+                                                fontWeight = FontWeight(400),
+                                                fontSize = 14.sp,
+                                                overflow = TextOverflow.Ellipsis,
+                                                maxLines = 1,
+                                            )
+                                        } else {
+                                            Text(
+                                                text = itemsWaitingArtistName[it],
+                                                modifier = Modifier
+                                                    .padding(bottom = 4.dp)
+                                                    .width(250.dp),
+                                                color = SubTitle,
+                                                fontWeight = FontWeight(400),
+                                                fontSize = 14.sp,
+                                                overflow = TextOverflow.Ellipsis,
+                                                maxLines = 1,
+                                            )
+                                        }
+
+
                                     }
                                     Button(
                                         onClick = {},
@@ -582,10 +668,10 @@ fun HomeView(
                         }
                     } // 아이템 구성 UI
                 } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
-            } // 공개예정 큐레이션 UI
+            } // 공개예정 큐레이션 UI 끝
 
             Text(
-                text = "봄의 아침을 맞이하며",
+                text = itemsTheme3ExhibitionTitle,
                 color = Title,
                 fontWeight = FontWeight(700),
                 fontSize = 20.sp,
@@ -605,12 +691,12 @@ fun HomeView(
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    items(itemsList.size) {
+                    items(itemsTheme3Thumbnail.size) {
                         Column {
                             Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
+                                AsyncImage(
+                                    model = itemsTheme3Thumbnail[it],
+                                    contentDescription = "테마3",
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
                                         .size(154.dp)
@@ -619,28 +705,35 @@ fun HomeView(
                             }
 
                             Text(
-                                text = "&아트워크 타이틀",
-                                modifier = Modifier.padding(
-                                    top = 4.dp, bottom = 4.dp
-                                ),
+                                text = itemsTheme3ThumbArtworkTitle[it],
+                                modifier = Modifier
+                                    .padding(
+                                        top = 4.dp,
+                                        bottom = 4.dp
+                                    )
+                                    .width(154.dp),
                                 color = Title,
                                 fontWeight = FontWeight(500),
                                 fontSize = 16.sp,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1,
                             )
                             Text(
-                                text = "&아티스트 타이틀",
+                                text = itemsTheme3ThumbArtistTitle[it],
                                 modifier = Modifier.padding(bottom = 4.dp),
                                 color = SubTitle,
                                 fontWeight = FontWeight(400),
                                 fontSize = 14.sp,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1,
                             )
                         } // 아이템 구성 UI
                     } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
-                } // 봄의 아침을 맞이하며 Row 리스트
-            } // 봄의 아침을 맞이하며 UI
+                } // 테마3 Row 리스트
+            } // 테마3 UI
 
             Text(
-                text = "집중의 시간",
+                text = itemsTheme4ExhibitionTitle,
                 color = Title,
                 fontWeight = FontWeight(700),
                 fontSize = 20.sp,
@@ -660,12 +753,12 @@ fun HomeView(
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    items(itemsList.size) {
+                    items(itemsTheme4Thumbnail.size) {
                         Column {
                             Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
+                                AsyncImage(
+                                    model = itemsTheme4Thumbnail[it],
+                                    contentDescription = "테마4",
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
                                         .size(154.dp)
@@ -674,28 +767,35 @@ fun HomeView(
                             }
 
                             Text(
-                                text = "&아트워크 타이틀",
-                                modifier = Modifier.padding(
-                                    top = 4.dp, bottom = 4.dp
-                                ),
+                                text = itemsTheme4ThumbArtworkTitle[it],
+                                modifier = Modifier
+                                    .padding(
+                                        top = 4.dp,
+                                        bottom = 4.dp
+                                    )
+                                    .width(154.dp),
                                 color = Title,
                                 fontWeight = FontWeight(500),
                                 fontSize = 16.sp,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1,
                             )
                             Text(
-                                text = "&아티스트 타이틀",
+                                text = itemsTheme4ThumbArtistTitle[it],
                                 modifier = Modifier.padding(bottom = 4.dp),
                                 color = SubTitle,
                                 fontWeight = FontWeight(400),
                                 fontSize = 14.sp,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1,
                             )
                         } // 아이템 구성 UI
                     } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
-                } // 집중의 시간 Row 리스트
-            } // 집중의 시간 UI
+                } // 테마4 Row 리스트
+            } // 테마4 UI 끝
 
             Text(
-                text = "내적 Groove 좀 타볼까요",
+                text = itemsTheme5ExhibitionTitle,
                 color = Title,
                 fontWeight = FontWeight(700),
                 fontSize = 20.sp,
@@ -715,12 +815,12 @@ fun HomeView(
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    items(itemsList.size) {
+                    items(itemsTheme5Thumbnail.size) {
                         Column {
                             Box {
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_empty),
-                                    contentDescription = "",
+                                AsyncImage(
+                                    model = itemsTheme5Thumbnail[it],
+                                    contentDescription = "테마5",
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
                                         .size(154.dp)
@@ -729,25 +829,32 @@ fun HomeView(
                             }
 
                             Text(
-                                text = "&아트워크 타이틀",
-                                modifier = Modifier.padding(
-                                    top = 4.dp, bottom = 4.dp
-                                ),
+                                text = itemsTheme5ThumbArtworkTitle[it],
+                                modifier = Modifier
+                                    .padding(
+                                        top = 4.dp,
+                                        bottom = 4.dp
+                                    )
+                                    .width(154.dp),
                                 color = Title,
                                 fontWeight = FontWeight(500),
                                 fontSize = 16.sp,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1,
                             )
                             Text(
-                                text = "&아티스트 타이틀",
+                                text = itemsTheme5ThumbArtistTitle[it],
                                 modifier = Modifier.padding(bottom = 4.dp),
                                 color = SubTitle,
                                 fontWeight = FontWeight(400),
                                 fontSize = 14.sp,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1,
                             )
                         } // 아이템 구성 UI
                     } // 뷰 모델에서 잔달받은 콘텐츠 사이즈만큼 아이템 생성
-                } // 내적 Groove 좀 타볼까요 Row 리스트
-            } // 내적 Groove 좀 타볼까요 UI
+                } // 테마5 Row 리스트
+            } // 테마5 UI 끝
 
             Button(
                 onClick = {},
@@ -786,7 +893,7 @@ fun HomeView(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    items(itemsRecommendArtistName.size) { it ->
+                    items(itemsArtistProfileImage.size) { it ->
                         Column {
                             Box {
                                 AsyncImage(
@@ -800,7 +907,7 @@ fun HomeView(
                             }
 
                             Text(
-                                text = itemsRecommendArtistName[it],
+                                text = itemsArtistNameRecommend[it],
                                 modifier = Modifier
                                     .width(154.dp)
                                     .padding(top = 4.dp),

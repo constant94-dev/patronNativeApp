@@ -1,7 +1,7 @@
 package digital.patron.app_patronnativeapp.data.network.remote
 
 import digital.patron.app_patronnativeapp.data.network.model.NetworkTest
-import digital.patron.app_patronnativeapp.domain.dto.ExhibitionDto
+import digital.patron.app_patronnativeapp.domain.dto.HomeContentsDto
 import retrofit2.http.GET
 
 /**
@@ -9,7 +9,7 @@ import retrofit2.http.GET
  * */
 interface HomeNetworkApi {
     @GET(value = "home")
-    suspend fun getHomeContents(): ExhibitionDto
+    suspend fun getHomeContents(): HomeContentsDto
 
     @GET("/test")
     suspend fun getTests(): NetworkTest
