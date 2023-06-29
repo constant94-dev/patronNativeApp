@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.App_patronNativeApp" parent="android:Theme.Material.Light.NoActionBar">
+    <style name="Theme.App_patronNativeApp" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.AppCompat" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowBackground">@color/background</item>
     </style>
 

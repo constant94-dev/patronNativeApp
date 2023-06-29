@@ -28,7 +28,7 @@ class HomeViewModel(
     val curationThumb: State<List<String>> = _curationThumb
 
     private val _curationArtworkTitle = mutableStateOf<List<String>>(emptyList())
-    val curationArtworkTitleho: State<List<String>> = _curationArtworkTitle
+    val curationArtworkTitle: State<List<String>> = _curationArtworkTitle
 
     private val _curationArtistName = mutableStateOf<List<String>>(emptyList())
     val curationArtistName: State<List<String>> = _curationArtistName

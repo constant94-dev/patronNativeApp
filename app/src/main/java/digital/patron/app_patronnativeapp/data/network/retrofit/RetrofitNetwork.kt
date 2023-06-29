@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * */
 object RetrofitNetwork {
     //private const val BaseUrl = "http://20.249.92.52:8088/" //  API 요청의 기본 URL
-    private const val BaseUrl = "http://183.96.128.211:8088/"
+    private const val BaseUrl = "http://211.217.233.136:8088/"
 
     private val okHttpClient: OkHttpClient by lazy {
         val loggingInterceptor = HttpLoggingInterceptor().apply {

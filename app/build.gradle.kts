@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "digital.patron.app_patronnativeapp"
-        minSdk = 21
+        minSdk = 31
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -127,4 +127,8 @@ dependencies {
 
     // Kotlin 코루틴에서 지원하는 이미지 로드 라이브러리
     implementation("io.coil-kt:coil-compose:2.4.0")
+
+    // splash screen
+    implementation("androidx.core:core-splashscreen:1.0.0")
+
 }
