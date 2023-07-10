@@ -122,7 +122,7 @@ class HomeViewModel(
     }
 
     init {
-        getHomeContents()
+        //getHomeContents()
     }
 
     // State 활용한 홈 콘텐츠 가져오기

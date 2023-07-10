@@ -25,6 +25,10 @@ import digital.patron.app_patronnativeapp.ui.main.HomeView
 import digital.patron.app_patronnativeapp.ui.main.HomeViewModel
 import digital.patron.app_patronnativeapp.ui.player.PlayerView
 import digital.patron.app_patronnativeapp.ui.search.SearchView
+import digital.patron.app_patronnativeapp.ui.setting.SettingLanguageView
+import digital.patron.app_patronnativeapp.ui.setting.SettingMembershipCancel
+import digital.patron.app_patronnativeapp.ui.setting.SettingPayDetailView
+import digital.patron.app_patronnativeapp.ui.setting.SettingView
 import digital.patron.app_patronnativeapp.ui.theme.SplashScreenAPITheme
 import kotlinx.coroutines.launch
 
@@ -55,7 +59,7 @@ class MainActivity : ComponentActivity() {
 
             NavHost(
                 navController = navController,
-                startDestination = "home"
+                startDestination = "setting"
             ) {
                 composable("home") {
                     HomeView(viewModel, navController)
@@ -65,6 +69,18 @@ class MainActivity : ComponentActivity() {
                 }
                 composable("player") {
                     PlayerView(navController)
+                }
+                composable("setting"){
+                    SettingView(navController)
+                }
+                composable("setting-language"){
+                    SettingLanguageView(navController)
+                }
+                composable("setting-payDetails"){
+                    SettingPayDetailView(navController)
+                }
+                composable("setting-membershipCancel"){
+                    SettingMembershipCancel(navController)
                 }
             }
 
