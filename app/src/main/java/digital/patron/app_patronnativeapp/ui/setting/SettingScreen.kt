@@ -1,6 +1,8 @@
 package digital.patron.app_patronnativeapp.ui.setting
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -42,7 +44,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
+import androidx.navigation.NavDeepLinkRequest
 import digital.patron.app_patronnativeapp.R
 import digital.patron.app_patronnativeapp.ui.common.HomeContentsReady
 import digital.patron.app_patronnativeapp.ui.theme.BoxText
@@ -54,6 +59,7 @@ import digital.patron.app_patronnativeapp.ui.theme.Title
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SettingView(
+    viewModel: SettingViewModel,
     navController: NavController,
 ) {
     val vtScrollState = rememberScrollState()
@@ -64,6 +70,8 @@ fun SettingView(
             visible = showDialog.value,
             onDismissRequest = { showDialog.value = false })
     }
+
+
 
     Scaffold(
         topBar = {
@@ -174,7 +182,10 @@ fun SettingView(
                 Text(
                     text = "웹 사이트 방문",
                     modifier = Modifier
-                        .padding(top = 8.dp, bottom = 8.dp),
+                        .padding(top = 8.dp, bottom = 8.dp)
+                        .clickable {
+                                   /*TODO 어떤 코드를 작성해야 외부 URL 로 이동할까*/
+                        },
                     color = Title,
                     fontWeight = FontWeight(500),
                     fontSize = 16.sp,
@@ -205,7 +216,10 @@ fun SettingView(
             Text(
                 text = "로그아웃",
                 modifier = Modifier
-                    .padding(bottom = 20.dp),
+                    .padding(bottom = 20.dp)
+                    .clickable {
+                               viewModel.logout()
+                    },
                 color = Title,
                 fontWeight = FontWeight(500),
                 fontSize = 16.sp,

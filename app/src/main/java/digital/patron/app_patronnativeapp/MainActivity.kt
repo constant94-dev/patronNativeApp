@@ -21,6 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import digital.patron.app_patronnativeapp.domain.util.HomeAndroidViewModelFactory
+import digital.patron.app_patronnativeapp.domain.util.SettingAndroidViewModelFactory
 import digital.patron.app_patronnativeapp.ui.main.HomeView
 import digital.patron.app_patronnativeapp.ui.main.HomeViewModel
 import digital.patron.app_patronnativeapp.ui.player.PlayerView
@@ -29,6 +30,7 @@ import digital.patron.app_patronnativeapp.ui.setting.SettingLanguageView
 import digital.patron.app_patronnativeapp.ui.setting.SettingMembershipCancel
 import digital.patron.app_patronnativeapp.ui.setting.SettingPayDetailView
 import digital.patron.app_patronnativeapp.ui.setting.SettingView
+import digital.patron.app_patronnativeapp.ui.setting.SettingViewModel
 import digital.patron.app_patronnativeapp.ui.theme.SplashScreenAPITheme
 import kotlinx.coroutines.launch
 
@@ -51,8 +53,12 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            val viewModel: HomeViewModel = viewModel(
+            val homeViewModel: HomeViewModel = viewModel(
                 factory = HomeAndroidViewModelFactory(application),
+            )
+
+            val settingViewModel: SettingViewModel = viewModel(
+                factory = SettingAndroidViewModelFactory(application),
             )
 
             var navController = rememberNavController()
@@ -62,7 +68,7 @@ class MainActivity : ComponentActivity() {
                 startDestination = "setting"
             ) {
                 composable("home") {
-                    HomeView(viewModel, navController)
+                    HomeView(homeViewModel, navController)
                 }
                 composable("search") {
                     SearchView(navController)
@@ -70,19 +76,21 @@ class MainActivity : ComponentActivity() {
                 composable("player") {
                     PlayerView(navController)
                 }
-                composable("setting"){
-                    SettingView(navController)
+                composable("setting") {
+                    SettingView(settingViewModel, navController)
                 }
-                composable("setting-language"){
+                composable("setting-language") {
                     SettingLanguageView(navController)
                 }
-                composable("setting-payDetails"){
+                composable("setting-payDetails") {
                     SettingPayDetailView(navController)
                 }
-                composable("setting-membershipCancel"){
+                composable("setting-membershipCancel") {
                     SettingMembershipCancel(navController)
                 }
             }
+
+
 
         }
     }
